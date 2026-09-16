@@ -1,0 +1,22 @@
+name: Social Sparks Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check Social Sparks files
+        run: |
+          echo "Checking Social Sparks repository..."
+          test -f Social_Spsrks
+          test -f activity_main.xml
+          echo "Required files found."
