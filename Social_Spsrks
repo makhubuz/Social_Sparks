@@ -1,0 +1,80 @@
+package com.example.socialsparks
+
+import android.os.Bundle
+import android.util.Log
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var timeInput: EditText
+    private lateinit var resultText: TextView
+    private lateinit var suggestButton: Button
+    private lateinit var resetButton: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        timeInput = findViewById(R.id.timeInput)
+        resultText = findViewById(R.id.resultText)
+        suggestButton = findViewById(R.id.suggestButton)
+        resetButton = findViewById(R.id.resetButton)
+
+        suggestButton.setOnClickListener {
+            giveSocialSpark()
+        }
+
+        resetButton.setOnClickListener {
+            timeInput.text.clear()
+            resultText.text = ""
+        }
+    }
+
+    private fun giveSocialSpark() {
+
+        val time = timeInput.text.toString().trim()
+
+        if (time.isEmpty()) {
+            resultText.text = "Please enter a time of day."
+            Log.d("SocialSparks", "Empty input")
+            return
+        }
+
+        val suggestion = if (time.equals("Morning", ignoreCase = true)) {
+
+            "Social Spark: Greet someone and start your day with a positive conversation."
+
+        } else if (time.equals("Mid-morning", ignoreCase = true)) {
+
+            "Social Spark: Take a short break and chat with a classmate."
+
+        } else if (time.equals("Afternoon", ignoreCase = true)) {
+
+            "Social Spark: Spend some time with friends and share ideas."
+
+        } else if (time.equals("Afternoon Snack Time", ignoreCase = true)) {
+
+            "Social Spark: Have a snack with someone and enjoy a friendly conversation."
+
+        } else if (time.equals("Dinner", ignoreCase = true)) {
+
+            "Social Spark: Eat dinner with family or friends and talk about your day."
+
+        } else if (time.equals("After Dinner/Night", ignoreCase = true)) {
+
+            "Social Spark: Send a friendly message to someone and check how they are doing."
+
+        } else {
+
+            resultText.text = "Invalid input. Please choose one of the available times."
+            Log.d("SocialSparks", "Invalid input: $time")
+            return
+        }
+
+        resultText.text = suggestion
+        Log.d("SocialSparks", "Suggestion displayed for: $time")
+    }
+}
